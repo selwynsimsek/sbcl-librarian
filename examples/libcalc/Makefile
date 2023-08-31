@@ -1,3 +1,4 @@
+SBCL_SRC=/opt/sbcl
 EXAMPLES_DIR := $(shell pwd)
 ROOT_DIR := $(shell dirname $(shell dirname $(EXAMPLES_DIR)))
 
@@ -18,6 +19,7 @@ libcalc.core libcalc.c libcalc.h libcalc.py: libcalc.lisp
 	CL_SOURCE_REGISTRY="$(ROOT_DIR)//" $(SBCL_SRC)/run-sbcl.sh --script "script.lisp"
 
 libcalc.dylib: libcalc.core libcalc.c
-	$(CC) -dynamiclib -o $@ libcalc.c -L$(SBCL_SRC)/src/runtime -lsbcl
+	$(CC)    -c -o libcalc.o libcalc.c
+	$(CC) -v -shared libcalc.o -o libcalc.so -L$(SBCL_SRC)/src/runtime/ -lsbcl
 clean:
-	rm -f example libsbcl.so libcalc.c libcalc.h libcalc.core libcalc.py libcalc.dylib
+	rm -f example libsbcl.so libcalc.c libcalc.h libcalc.core libcalc.py libcalc.dylib libcalc.o libcalc.so
