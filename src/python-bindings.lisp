@@ -29,7 +29,7 @@
     (format stream "from pathlib import Path~%~%")
 
     (format stream "try:~%")
-    (format stream "    libpath = Path('../lib/~a.so').resolve()~%" name)
+    (format stream "    libpath = (Path(__file__).parents[1] / 'lib/~a.so').resolve()~%" name)
     (format stream "except TypeError as e:~%")
     (format stream "    raise Exception('Unable to locate ~a') from e~%~%" name)
 
